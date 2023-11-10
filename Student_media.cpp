@@ -5,102 +5,117 @@
 #include <ctime>
 using namespace std;
 
+
 void message(void);
 void receive(void);
 void send(void);
-void afterLogin(void);
-void rate(void);
+void after_login(void);
+void Rate(void);
 
-class UserInfo {
+class Info
+{
+    
 public:
     string password;
     string username;
     int followers;
     int following;
-
-    // Default constructor
-    UserInfo() {
-        followers = 1;
-        following = 1;
+    //Default constructor
+    Info(){
+        followers=1;
+        following=1;
     }
-} user;
+    
+} ob;
 
-class CloseFriend : public UserInfo {
-public:
-    void makeCloseFriend(string friendName) {
-        ofstream file;
-        file.open("D:\\College\\C++\\Sem-3\\" + user.username + "_closeFriends.txt", file.out | file.app);
-        file << friendName << endl;
+class close_friend:public Info{
+    public:
+    void makeClosefriend(string friendname){
+         ofstream file;
+        file.open("D:\\College\\C++\\Sem-3\\"+ob.username+ "_closefriends.txt", file.out | file.app);
+        file << friendname << endl;
         file.close();
     }
-
     friend void showCloseFriends();
 };
 
-void showCloseFriends() {
-    string friendName;
-    ifstream read;
-    read.open("D:\\College\\C++\\Sem-3\\" + user.username + "_closeFriends.txt");
-    cout << "Close Friends list: \n";
-    while (getline(read, friendName)) {
-        cout << friendName << endl;
+void showCloseFriends(){
+    string un;
+     ifstream read;
+
+    read.open("D:\\College\\C++\\Sem-3\\"+ob.username+ "_closefriends.txt");
+    cout<<"Close Friends list: \n";
+    while (getline(read, un)){
+        cout<<un<<endl;
     }
     read.close();
+
 }
 
-bool checkFileIsEmpty(ifstream &file) {
+bool check_file_is_empty(ifstream &file)
+{
     return file.peek() == EOF;
 }
 
-bool loggedIn() {
-    string enteredUsername, enteredPassword;
+bool LoggedIn()
+{
+    string un, pw;
     
     cout << "\t\t\t\t\t\t\t\t STUDENT-GRAM\n ";
-    cout << "\t\t\t\t\t\t\t\t ------------\n\n\n\n";
+        cout << "\t\t\t\t\t\t\t\t ------------\n\n\n\n";
     cout << "\t\t\t Enter Username : ";
-    cin >> user.username;
+    cin >> ob.username;
     cout << "\n\n\t\t\t Enter Password : ";
-    cin >> user.password;
+    cin >> ob.password;
 
     ifstream read;
-    read.open("D:\\College\\C++\\Sem-3\\" + user.username + ".txt");
-    getline(read, enteredUsername);
-    getline(read, enteredPassword);
+    read.open("D:\\College\\C++\\Sem-3\\" + ob.username + ".txt");
+    getline(read, un);
+    getline(read, pw);
 
-    if (enteredUsername == user.username && enteredPassword == user.password) {
+    if (un == ob.username && pw == ob.password)
+    {
         return true;
-    } else {
+    }
+    else
+    {
         return false;
     }
 }
 
-void search() {
+void search()
+{
     system("cls");
     cout << "\t\t\t\t\t\t\t\t STUDENT-GRAM\n ";
     cout << "\t\t\t\t\t\t\t\t ------------\n\n";
-    cout << "\t\t\t Enter username : ";
-    string searchedUsername, temp;
-    cin >> searchedUsername;
+    cout << "\t\t\tEnter username : ";
+    string user, un;
+    cin >> user;
 
     ifstream read;
+
     read.open("D:\\College\\C++\\Sem-3\\usernames.txt");
-    while (getline(read, temp)) {
-        if (temp == searchedUsername) {
+    while (getline(read, un))
+    {
+        if (un == user)
+        {
             ifstream file;
             string followers[1], following[1];
-            file.open("D:\\College\\C++\\Sem-3\\" + searchedUsername + ".txt");
+            file.open("D:\\College\\C++\\Sem-3\\" + user + ".txt");
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++)
+            {
                 getline(file, followers[0]);
             }
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 4; i++)
+            {
                 getline(file, following[0]);
             }
 
             cout << "\n\n\t\t\t\t\tUser found!!!" << endl;
-            cout << "\n\t\t\tUsername : " << searchedUsername << endl;
+            cout << "\n\t\t\tUsername : " << user << endl;
             cout << "\n\t\t\tFollowers : " << followers[0] << endl;
-            cout << "\n\t\t\tFollowing : " << following[0] << endl << endl << endl;
+            cout << "\n\t\t\tFollowing : " << following[0] << endl<<endl<<endl;
 
             read.close();
             file.close();
@@ -108,11 +123,13 @@ void search() {
             return;
         }
     }
-    cout << "\n\n\t\t\t\t\t No such user found!!" << endl << endl;
+    cout << "\n\n\t\t\t\t\t No such user found!!" << endl
+         << endl;
     return;
 }
 
-void follow() {
+void follow()
+{
     fstream file1;
     fstream file2;
     ifstream read;
@@ -121,26 +138,30 @@ void follow() {
     system("cls");
     cout << "\t\t\t\t\t\t\t\t STUDENT-GRAM\n ";
     cout << "\t\t\t\t\t\t\t\t ------------\n\n";
-    cout << "\t\t\t Enter username : ";
-    string followUsername, temp;
-    cin >> followUsername;
+    cout << "\t\t\tEnter username : ";
+    string user, un;
+    cin >> user;
 
-    while (getline(read, temp)) {
-        if (temp == followUsername) {
+    while (getline(read, un))
+    {
+        if (un == user)
+        {
             ifstream file;
             string followers[1], following[1];
-            file.open("D:\\College\\C++\\Sem-3\\" + followUsername + ".txt");
+            file.open("D:\\College\\C++\\Sem-3\\" + user + ".txt");
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++)
+            {
                 getline(file, followers[0]);
             }
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 4; i++)
+            {
                 getline(file, following[0]);
             }
 
             cout << "\n\t\t\t\t\t\tUser found!!!" << endl;
             cout << "\t\t\t\t\t\t\t\t ------------\n\n";
-            cout << "\n\t\t\tUsername : " << followUsername << endl;
+            cout << "\n\t\t\tUsername : " << user << endl;
             cout << "\t\t\tFollowers : " << followers[0] << endl;
             cout << "\t\t\tFollowing : " << following[0] << endl;
 
@@ -151,14 +172,18 @@ void follow() {
             int choice;
             cin >> choice;
 
-            if (choice == 2) {
+            if (choice == 2)
+            {
                 cout << "\n\t\t\tOkay!!\n\n";
                 return;
-            } else if (choice == 1) {
-                file1.open("D:\\College\\C++\\Sem-3\\" + followUsername + ".txt");
+            }
+            else if (choice == 1)
+            {
+                file1.open("D:\\College\\C++\\Sem-3\\" + user + ".txt");
                 string line[1];
 
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 3; i++)
+                {
                     getline(file1, line[0]);
                 }
 
@@ -168,135 +193,160 @@ void follow() {
                 temp = to_string(x);
 
                 file1.close();
-                file1.open("D:\\College\\C++\\Sem-3\\" + followUsername + ".txt");
+                file1.open("D:\\College\\C++\\Sem-3\\" + user + ".txt");
 
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < 2; i++)
+                {
                     getline(file1, line[0]);
                 }
                 file1 << temp;
+                
+                //Incresing the no of following of User.
 
-                // Increasing the number of following of User.
+                file2.open("D:\\College\\C++\\Sem-3\\" + ob.username + ".txt");
+                string getfollowing[1];
 
-                file2.open("D:\\College\\C++\\Sem-3\\" + user.username + ".txt");
-                string getFollowing[1];
+                for (int i = 0; i < 4; i++)
+                {
+                    getline(file2, getfollowing[0]);
 
-                for (int i = 0; i < 4; i++) {
-                    getline(file2, getFollowing[0]);
                 }
 
-                string temp2 = getFollowing[0];
-                int y = stoi(temp2);
+                string temp2 = getfollowing[0];
+                int y= stoi(temp2);
                 y++;
-                temp2 = to_string(y);
+                temp2=to_string(y);
                 file2.close();
-                file2.open("D:\\College\\C++\\Sem-3\\" + user.username + ".txt");
+                file2.open("D:\\College\\C++\\Sem-3\\" + ob.username + ".txt");
 
-                for (int i = 0; i < 3; i++) {
-                    getline(file2, getFollowing[0]);
+                for (int i = 0; i < 3; i++)
+                {
+                    getline(file2, getfollowing[0]);
+
                 }
                 file2 << temp2;
-                cout << "\n\n\t\t\tSuccessfully Followed!!\n\n ";
+                cout<<"\n\n\t\t\tSuccessfully Followed!!\n\n ";
+                
             }
-            cout << "press\n1. To add him to close friend\n2. to skip\nEnter your choice: ";
+            cout<<"press\n1. To add him to close friend\n2. to skip\nEnter your choicee: ";
             int key;
-            cin >> key;
-            if (key == 1) {
-                CloseFriend a;
-                a.makeCloseFriend(followUsername);
-                return;
-            } else if (key == 2) {
-                return;
-            } else {
-                cout << "You pressed a wrong key :(";
+            cin>>key;
+            if (key==1)
+            {
+                close_friend a;
+                a.makeClosefriend(user);
                 return;
             }
+            else if (key == 2)
+            {
+                return;
+            }
+            else {
+                cout<<"You pressed a wrong key:(";
+                return;
+            }
+            
         }
     }
-    cout << "\n\n\t\t\t\t\tNo such user found" << endl << endl;
+      cout << "\n\n\t\t\t\t\tNo such user found" << endl
+         << endl;
     return;
 }
 
-void viewProfile() {
+void view_profile()
+{
     system("cls");
     cout << "\t\t\t\t\t\t\t\t STUDENT-GRAM\n ";
-    cout << "\t\t\t\t\t\t\t\t ------------\n\n";
-    cout << "\t\t\t\t\t\t\t--------YOUR PROFILE PAGE--------\n\n";
+        cout << "\t\t\t\t\t\t\t\t ------------\n\n";
+            cout << "\t\t\t\t\t\t\t--------YOUR PROFILE PAGE--------\n\n";
+            
+            ifstream file;
+            string followers[1], following[1];
+            file.open("D:\\College\\C++\\Sem-3\\" + ob.username + ".txt");
 
-    ifstream file;
-    string followers[1], following[1];
-    file.open("D:\\College\\C++\\Sem-3\\" + user.username + ".txt");
+            for (int i = 0; i < 3; i++)
+            {
+                getline(file, followers[0]);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                getline(file, following[0]);
+            }
 
-    for (int i = 0; i < 3; i++) {
-        getline(file, followers[0]);
-    }
-    for (int i = 0; i < 4; i++) {
-        getline(file, following[0]);
-    }
+            cout << "\n\t\t\tUsername : " << ob.username << endl
+                 << endl;
+            cout << "\t\t\tFollowers : " << followers[0] << endl<<endl;
+            cout << "\t\t\tFollowing : " << following[0] << endl<<endl<<endl;
 
-    cout << "\n\t\t\tUsername : " << user.username << endl << endl;
-    cout << "\t\t\tFollowers : " << followers[0] << endl << endl;
-    cout << "\t\t\tFollowing : " << following[0] << endl << endl << endl;
-
-    file.close();
-    cout << "want to see close friends list?(Y/N): ";
-    char key;
-    cin >> key;
-    if (key == 'Y' || key == 'y' || key == 'n' || key == 'N') {
-        showCloseFriends();
-    } else {
-        cout << "enter wrong input :(";
-    }
+            file.close();
+            cout<<"want to see close friends list?(Y/N): ";
+            char key;
+            cin>>key;
+            if (key=='Y'||key=='y'|| key=='n'||key=='N')
+            {
+                showCloseFriends();
+            }
+            else cout<<"enter wrong input :(";
+            
 }
 
-void passwordChange() {
-    string newPass;
+void password_change()
+{
+    string pass;
     string temp;
     fstream file;
     
-    file.open("D:\\College\\C++\\Sem-3\\" + user.username + ".txt");
-    for (int i = 0; i < 2; i++) {
-        getline(file, temp);
+    file.open("D:\\College\\C++\\Sem-3\\" + ob.username + ".txt");
+    for(int i=0; i<2; i++)
+    {
+        getline (file, temp);
     }
     file.close();
     system("cls");
-    cout << "\t\t\t\t\t\t\t\t STUDENT-GRAM\n ";
-    cout << "\t\t\t\t\t\t\t\t ------------\n\n";
+     cout << "\t\t\t\t\t\t\t\t STUDENT-GRAM\n ";
+        cout << "\t\t\t\t\t\t\t\t ------------\n\n";
     cout << "\n\t\t\tEnter current password : ";
-    cin >> newPass;
+    cin >> pass;
     
-    if (newPass == temp) {
+    if (pass==temp)
+    {
         cout << "\n\t\t\tEnter new password : ";
-        cin >> newPass;
+        cin >> pass;
 
-        file.open("D:\\College\\C++\\Sem-3\\" + user.username + ".txt");
-        getline(file, temp);
+        file.open("D:\\College\\C++\\Sem-3\\" + ob.username + ".txt");
+        getline (file, temp);
 
-        file << newPass;
-        cout << "\n\n\t\t\t\t\tPassword changed!!!\n\n";
+        file << pass;
+        cout<<"\n\n\t\t\t\t\tPassword changed!!!\n\n";
         file.close();
-    } else {
-        cout << "\n\n\t\t\t\t\tInvalid Password!!!!\n\n";
+    }
+
+    else
+    {
+        cout<<"\n\n\t\t\t\t\tInvalid Password!!!!\n\n";
     }
 
     system("PAUSE");
     return;
 }
 
-void rate() {
+void Rate(){
     system("cls");
     cout << "\t\t\t\t\t\t\t\t STUDENT-GRAM\n ";
-    cout << "\t\t\t\t\t\t\t\t ------------\n\n";
-    cout << "\n\n\t\t\t\t\tPlease Enter your User Experience by Giving Rating out of 10\n";
+        cout << "\t\t\t\t\t\t\t\t ------------\n\n";
+    cout<<"\n\n\t\t\t\t\tPlease Enter your User Experience by Giving Rating out of 10\n";
     int rating;
-    cin >> rating;
+    cin>>rating;
 
-    if (rating >= 0 && rating <= 10) {
-        cout << "\n\n\t\t\t\t\t\tThank you so much to give your feedback :)\n\n";
+  
+    if (rating>=0 && rating<=10)
+    {
+        cout<<"\n\n\t\t\t\t\t\tThank you so much to give your feedback :)\n\n";
         system("PAUSE");
         return;
-    } else {
-        cout << "\n\n\t\t\t\t\t\tPlease enter value between 0-10 \n";
     }
+    else cout<<"\n\n\t\t\t\t\t\tPlease enter value between 0-10 \n";
+
 }
 void message()
 {
