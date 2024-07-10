@@ -49,10 +49,4 @@ We welcome contributions to Virtual Connections! If you have suggestions for imp
 - Add file sharing capabilities
 - Introduce a basic recommendation system for new connections
 
-## License
 
-[Insert your chosen license here]
-
-## Contact
-
-[Your contact information or project maintainer's contact]
